@@ -42,18 +42,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeRequests()
+        http.csrf().disable().cors().disable();
+        http.authorizeRequests()
                 .antMatchers("/",
                         "/home",
                         "/shop/*",
                         "/login",
                         "/login/**",
                         "/logoff/**",
+                        "admin/**",
                         "/signup")
                 .permitAll()
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+//                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/user/**",
                         "/shopping-cart/**",
                         "/orders/**").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")

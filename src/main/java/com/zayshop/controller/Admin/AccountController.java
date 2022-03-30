@@ -1,7 +1,9 @@
 package com.zayshop.controller.Admin;
 
+import com.zayshop.dto.AccountDTO;
 import com.zayshop.entity.Account;
 import com.zayshop.service.AccountService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,10 +31,13 @@ public class AccountController {
     @GetMapping("/{username}")
     public ResponseEntity getAccountByUsername(@PathVariable String username) {
         Optional<Account> account = accountService.findAccountByUsername(username);
+        AccountDTO dto = new AccountDTO();
         if (account.isEmpty()) {
             return ResponseEntity.badRequest().build();
         } else {
-            return ResponseEntity.ok(accountService.findAccountByUsername(username).get());
+            BeanUtils.copyProperties(account.get(), dto);
+            dto.setEdit(true);
+            return ResponseEntity.ok(dto);
         }
     }
 
@@ -43,8 +48,14 @@ public class AccountController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity updateAccount(@RequestBody Account account) {
-        return ResponseEntity.ok(accountService.updateAccount(account));
+    public ResponseEntity updateAccount(@RequestBody AccountDTO dto) {
+        Account account = new Account();
+        Optional<Account> checkAcc = accountService.findAccountByUsername(dto.getUsername());
+        if (checkAcc.isEmpty()) return ResponseEntity.badRequest().build();
+        BeanUtils.copyProperties(dto, account);
+        account.setPassword(checkAcc.get().getPassword());
+        accountService.updateAccount(account);
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/delete/{username}")

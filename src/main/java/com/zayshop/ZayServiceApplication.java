@@ -7,9 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@SpringBootApplication()
+@SpringBootApplication
 @EnableConfigurationProperties(StorageConfig.class)
 public class ZayServiceApplication {
 
@@ -23,6 +22,8 @@ public class ZayServiceApplication {
     CommandLineRunner init(FileSystemStorageService fileSystemStorageService){
         return (args -> {
             fileSystemStorageService.init();
+            System.out.println("current time: " +System.currentTimeMillis());
+            System.out.println("last time: " + (System.currentTimeMillis() + 2*60*60*1000));
         });
     }
 
