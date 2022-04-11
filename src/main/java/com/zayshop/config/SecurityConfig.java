@@ -42,18 +42,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().disable();
+        http.csrf().disable().cors();
         http.authorizeRequests()
-                .antMatchers("/",
+                .antMatchers(
                         "/home",
                         "/shop/*",
-                        "/login",
+                        "/logon",
                         "/login/**",
                         "/logoff/**",
-                        "admin/**",
+//                        "/admin/**",
                         "/signup")
                 .permitAll()
-//                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/admin/**","/admin/account/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/user/**",
                         "/shopping-cart/**",
                         "/orders/**").access("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
@@ -62,6 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.exceptionHandling()
-                .accessDeniedPage("/403");
+                .accessDeniedPage("/login/403");
     }
 }

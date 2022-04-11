@@ -11,7 +11,7 @@ public class Order {
     @Column(name = "ID", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "Username", nullable = false)
     private Account username;
 

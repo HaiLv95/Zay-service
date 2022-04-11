@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080/")
 public class LoginController {
 
 
@@ -27,10 +28,8 @@ public class LoginController {
 
     @Autowired
     UserDetailServiceImpl userDetailService;
-
-
-    @PostMapping("/login")
-    public JwtResponse loginResponse(@RequestBody JwtRequest jwtRequest) throws Exception {
+    @PostMapping(value = "/logon")
+    public JwtResponse postLogin(@RequestBody JwtRequest jwtRequest){
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -39,8 +38,10 @@ public class LoginController {
                     )
             );
         } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
+//            throw new Exception("INVALID_CREDENTIALS", e);
+            e.printStackTrace();
         }
+
         final UserDetails userDetails
                 = userDetailService.loadUserByUsername(jwtRequest.getUsername());
         final String token =
@@ -48,6 +49,7 @@ public class LoginController {
 
         return  new JwtResponse(token);
     }
+
     @GetMapping("/403")
     @ResponseBody
     public String loginError(){

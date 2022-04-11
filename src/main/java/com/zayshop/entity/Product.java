@@ -14,7 +14,7 @@ public class Product {
     @Column(name = "Name", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "Image", nullable = false, length = 500)
+    @Column(name = "Image", length = 500)
     private String image;
 
     @Column(name = "CreateDate", nullable = false)
@@ -29,7 +29,7 @@ public class Product {
     @Column(name = "Size", nullable = false)
     private Integer size;
 
-    @Column(name = "Color", nullable = false, length = 20)
+    @Column(name = "Color", length = 20)
     private String color;
 
     @Column(name = "Price", nullable = false)
@@ -41,7 +41,7 @@ public class Product {
     @Column(name = "Quantity", nullable = false)
     private Integer quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "CategoryID", nullable = false)
     private Category categoryID;
 

@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -25,23 +26,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtUtility jwtUtility;
 
 
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorization = request.getHeader("Authorization");
         String token = null;
         String userName = null;
 
-        if(null != authorization && authorization.startsWith("Bearer ")) {
+        if (null != authorization && authorization.startsWith("Bearer ")) {
             token = authorization.substring(7);
             userName = jwtUtility.getUsernameFromToken(token);
         }
 
-        if(null != userName && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (null != userName && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails
                     = userDetailService.loadUserByUsername(userName);
-            System.out.println("userdetail " + userDetails.getUsername());
 
-            if(jwtUtility.validateToken(token,userDetails)) {
+            if (jwtUtility.validateToken(token, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                         = new UsernamePasswordAuthenticationToken(userDetails,
                         null, userDetails.getAuthorities());

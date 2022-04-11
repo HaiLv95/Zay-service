@@ -10,11 +10,11 @@ public class Orderdetail {
     @Column(name = "ID", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "OrderID", nullable = false)
     private Order orderID;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "ProductID", nullable = false)
     private Product productID;
 

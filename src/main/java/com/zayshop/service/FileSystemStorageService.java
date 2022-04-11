@@ -76,7 +76,6 @@ public class FileSystemStorageService {
     public void init() throws Exception {
         try {
             Files.createDirectories(rootLocation);
-            System.out.println(rootLocation.toString());
         } catch (Exception e) {
             throw new Exception("Could Not Initialize storage", e);
         }

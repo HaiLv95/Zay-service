@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/admin/account")
 public class AccountController {
 
@@ -20,8 +21,6 @@ public class AccountController {
     AccountService accountService;
     @Autowired
     PasswordEncoder passwordEncoder;
-
-
 
     @GetMapping("")
     public ResponseEntity getAllAccount() {
@@ -36,7 +35,6 @@ public class AccountController {
             return ResponseEntity.badRequest().build();
         } else {
             BeanUtils.copyProperties(account.get(), dto);
-            dto.setEdit(true);
             return ResponseEntity.ok(dto);
         }
     }
@@ -65,9 +63,9 @@ public class AccountController {
         if (account.isEmpty()) {
             return ResponseEntity.badRequest().build();
         } else {
-            account.get().setActivated(false);
-            accountService.deleteAccount(account.get());
-            return ResponseEntity.ok().build();
+            account.get().setActivated(!account.get().getActivated());
+            Account accountDelete = accountService.deleteAccount(account.get());
+            return ResponseEntity.ok(accountDelete);
         }
     }
 }

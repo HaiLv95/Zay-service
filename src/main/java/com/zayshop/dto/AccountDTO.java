@@ -28,6 +28,4 @@ public class AccountDTO {
 
     @NotNull
     private String role;
-
-    private boolean isEdit;
 }

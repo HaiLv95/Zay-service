@@ -47,9 +47,8 @@ public class CategoryController {
         if (optional.isEmpty())
             return ResponseEntity.badRequest().build();
         else {
-            optional.get().setActivated(false);
-            categoryService.saveCategory(optional.get());
-            return ResponseEntity.ok().build();
+            optional.get().setActivated(!optional.get().getActivated());
+            return ResponseEntity.ok(categoryService.saveCategory(optional.get()));
         }
     }
 }

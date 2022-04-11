@@ -22,8 +22,6 @@ public class ZayServiceApplication {
     CommandLineRunner init(FileSystemStorageService fileSystemStorageService){
         return (args -> {
             fileSystemStorageService.init();
-            System.out.println("current time: " +System.currentTimeMillis());
-            System.out.println("last time: " + (System.currentTimeMillis() + 2*60*60*1000));
         });
     }
 

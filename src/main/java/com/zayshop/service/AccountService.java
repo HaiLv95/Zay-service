@@ -29,7 +29,7 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public void deleteAccount(Account account) {
-        accountRepository.save(account);
+    public Account deleteAccount(Account account) {
+        return accountRepository.save(account);
     }
 }
