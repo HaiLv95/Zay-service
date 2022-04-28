@@ -46,11 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(
                         "/home",
-                        "/shop/*",
+                        "/shop",
+                        "/shop/**",
                         "/logon",
                         "/login/**",
                         "/logoff/**",
-//                        "/admin/**",
                         "/signup")
                 .permitAll()
                 .antMatchers("/admin/**","/admin/account/**").access("hasRole('ROLE_ADMIN')")

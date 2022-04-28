@@ -1,12 +1,12 @@
 package com.zayshop.dto;
 
 import com.zayshop.entity.Category;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class ProductDTO {
 
@@ -15,6 +15,8 @@ public class ProductDTO {
     private String name;
 
     private Boolean available = false;
+
+    private String image;
 
     private String desc;
 
@@ -27,4 +29,6 @@ public class ProductDTO {
     private Integer quantity;
 
     private Integer categoryID;
+
+    private String categoryName;
 }
